@@ -33,9 +33,10 @@ public class JobFileAppender {
 	 * 	---/2017-12-25/821.log
 	 *
 	 */
-	private static String logBasePath = "/data/applogs/executor/jobhandler";
+	private static String logBasePath = "/home/deanzhang/app/larkmt-admin/data";
 	private static String glueSrcPath = logBasePath.concat("/gluesource");
 	public static void initLogPath(String logPath){
+		logger.info("initLogPath: " + logPath);
 		// init
 		if (logPath!=null && logPath.trim().length()>0) {
 			logBasePath = logPath;
