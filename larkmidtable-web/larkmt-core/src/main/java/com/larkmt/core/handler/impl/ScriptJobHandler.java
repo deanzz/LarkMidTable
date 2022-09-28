@@ -2,12 +2,15 @@ package com.larkmt.core.handler.impl;
 
 import com.larkmt.core.biz.model.ReturnT;
 import com.larkmt.core.biz.model.TriggerParam;
+import com.larkmt.core.executor.JobExecutor;
 import com.larkmt.core.glue.GlueTypeEnum;
 import com.larkmt.core.handler.IJobHandler;
 import com.larkmt.core.log.JobFileAppender;
 import com.larkmt.core.log.JobLogger;
 import com.larkmt.core.util.ScriptUtil;
 import com.larkmt.core.util.ShardingUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
@@ -15,7 +18,8 @@ import java.io.File;
  * Created by xuxueli on 17/4/27.
  */
 public class ScriptJobHandler extends IJobHandler {
-
+    
+    private Logger logger = LoggerFactory.getLogger(ScriptJobHandler.class);
     private int jobId;
     private long glueUpdatetime;
     private String gluesource;
@@ -65,8 +69,10 @@ public class ScriptJobHandler extends IJobHandler {
                 .concat(glueType.getSuffix());
         File scriptFile = new File(scriptFileName);
         if (!scriptFile.exists()) {
-            ScriptUtil.markScriptFile(scriptFileName, gluesource);
+            scriptFile.createNewFile();
+            ScriptUtil.markScriptFile(scriptFile, gluesource);
         }
+        logger.info("scriptFile file path: " + scriptFile.getAbsolutePath());
 
         // log file
         String logFileName = JobFileAppender.contextHolder.get();

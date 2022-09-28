@@ -5,10 +5,7 @@ import com.larkmt.core.thread.ProcessCallbackThread;
 import com.larkmt.core.biz.model.HandleProcessCallbackParam;
 import com.larkmt.core.log.JobLogger;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,17 +22,16 @@ public class ScriptUtil {
     /**
      * make script file
      *
-     * @param scriptFileName
+     * @param
      * @param content
      * @throws IOException
      */
-    public static void markScriptFile(String scriptFileName, String content) throws IOException {
+    public static void markScriptFile(File scriptFile, String content) throws IOException {
         // make file,   filePath/gluesource/666-123456789.py
         FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = new FileOutputStream(scriptFileName);
+            fileOutputStream = new FileOutputStream(scriptFile);
             fileOutputStream.write(content.getBytes("UTF-8"));
-            fileOutputStream.close();
         } catch (Exception e) {
             throw e;
         } finally {
