@@ -190,6 +190,7 @@ public class JobTrigger {
         ReturnT<String> triggerResult = null;
         triggerResult = runExecutor(triggerParam, address);
 
+        logger.info("triggerParam: " + triggerParam + "\ntriggerResult: " + triggerResult);
 
         // 5、collection trigger info
         StringBuffer triggerMsgSb = new StringBuffer();
@@ -241,6 +242,7 @@ public class JobTrigger {
             // 进行任务的触发
             ExecutorBiz executorBiz = new ExecutorBizImpl();
             executorBiz.run(triggerParam);
+            logger.info(">>>>>>>>>>> LarkMidTable trigger is running.");
         } catch (Exception e) {
             logger.error(">>>>>>>>>>> LarkMidTable trigger error, please check if the executor[{}] is running.", address, e);
             runResult = new ReturnT<String>(ReturnT.FAIL_CODE, ThrowableUtil.stackTraceToString(e));
