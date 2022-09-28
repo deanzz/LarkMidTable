@@ -50,16 +50,17 @@ public class JobLogger {
      */
     public static void log(String appendLogPattern, Object... appendLogArguments) {
 
-        FormattingTuple ft = MessageFormatter.arrayFormat(appendLogPattern, appendLogArguments);
+       /* FormattingTuple ft = MessageFormatter.arrayFormat(appendLogPattern, appendLogArguments);
         String appendLog = ft.getMessage();
 
-        /*appendLog = appendLogPattern;
+        *//*appendLog = appendLogPattern;
         if (appendLogArguments!=null && appendLogArguments.length>0) {
             appendLog = MessageFormat.format(appendLogPattern, appendLogArguments);
-        }*/
+        }*//*
 
         StackTraceElement callInfo = new Throwable().getStackTrace()[1];
-        logDetail(callInfo, appendLog);
+        logDetail(callInfo, appendLog);*/
+        logger.info(appendLogPattern, appendLogArguments);
     }
 
     /**
@@ -69,12 +70,13 @@ public class JobLogger {
      */
     public static void log(Throwable e) {
 
-        StringWriter stringWriter = new StringWriter();
+      /*  StringWriter stringWriter = new StringWriter();
         e.printStackTrace(new PrintWriter(stringWriter));
         String appendLog = stringWriter.toString();
 
         StackTraceElement callInfo = new Throwable().getStackTrace()[1];
-        logDetail(callInfo, appendLog);
+        logDetail(callInfo, appendLog);*/
+        logger.error("Got job error", e);
     }
 
 }
