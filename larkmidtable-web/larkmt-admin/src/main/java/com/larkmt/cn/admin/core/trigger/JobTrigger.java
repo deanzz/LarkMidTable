@@ -126,7 +126,7 @@ public class JobTrigger {
         jobLog.setJobDesc(jobInfo.getJobDesc());
 
         JobAdminConfig.getAdminConfig().getJobLogMapper().save(jobLog);
-        logger.debug(">>>>>>>>>>> LarkMidTable trigger start, jobId:{}", jobLog.getId());
+        logger.info(">>>>>>>>>>> LarkMidTable trigger start, jobId:{}", jobLog.getId());
 
         // 2、init trigger-param
         triggerParam.setJobId(jobInfo.getId());
@@ -217,7 +217,7 @@ public class JobTrigger {
         jobLog.setTriggerMsg(triggerMsgSb.toString());
         JobAdminConfig.getAdminConfig().getJobLogMapper().updateTriggerInfo(jobLog);
 
-        logger.debug(">>>>>>>>>>> LarkMidTable trigger end, jobId:{}", jobLog.getId());
+        logger.info(">>>>>>>>>>> LarkMidTable trigger end, jobId:{}", jobLog.getId());
     }
 
     private static long getMaxId(JobInfo jobInfo) {

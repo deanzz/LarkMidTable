@@ -94,7 +94,7 @@ public class AESUtil {
             SecretKey secretKey = new SecretKeySpec(keygen.generateKey().getEncoded(), KEY_ALGORITHM);
             return new String(decrypt(secretKey, Base64.getDecoder().decode(ciphertext)), StandardCharsets.UTF_8);
         } catch (Exception e) {
-            log.error("content decrypt error " + e.getMessage(), e);
+            log.error("content decrypt error, " + ciphertext + ", " + e.getMessage(), e);
         }
         return null;
     }
