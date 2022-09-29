@@ -5,6 +5,8 @@ import com.larkmt.core.glue.GlueFactory;
 import com.larkmt.core.handler.IJobHandler;
 import com.larkmt.core.handler.annotation.JobHandler;
 import com.larkmt.core.executor.JobExecutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.SmartInitializingSingleton;
@@ -20,12 +22,13 @@ import java.util.Map;
  */
 public class JobSpringExecutor extends JobExecutor
 		implements ApplicationContextAware, SmartInitializingSingleton, DisposableBean {
-
-
+    
+    private final Logger logger = LoggerFactory.getLogger(JobSpringExecutor.class);
     // start
     @Override
     public void afterSingletonsInstantiated() {
 
+        logger.info("execute afterSingletonsInstantiated");
         // init JobHandler Repository
         initJobHandlerRepository(applicationContext);
 

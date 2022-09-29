@@ -81,9 +81,11 @@ public class JobExecutor {
 
         // init TriggerCallbackThread
         TriggerCallbackThread.getInstance().start();
+        logger.info("TriggerCallbackThread started");
 
         // init ProcessCallbackThread
         ProcessCallbackThread.getInstance().start();
+        logger.info("ProcessCallbackThread started");
 
         // init executor-server
         port = port > 0 ? port : NetUtil.findAvailablePort(9999);
