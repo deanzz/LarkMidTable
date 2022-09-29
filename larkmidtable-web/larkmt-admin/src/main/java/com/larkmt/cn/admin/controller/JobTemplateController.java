@@ -6,6 +6,7 @@ import com.larkmt.cn.admin.core.conf.JobAdminConfig;
 import com.larkmt.cn.admin.entity.JobTemplate;
 import com.larkmt.cn.admin.service.JobTemplateService;
 import com.larkmt.core.biz.model.ReturnT;
+import com.larkmt.core.glue.GlueTypeEnum;
 import com.larkmt.core.util.DateUtil;
 import com.larkmt.cn.admin.core.cron.CronExpression;
 import com.larkmt.cn.admin.core.util.I18nUtil;
@@ -51,6 +52,7 @@ public class JobTemplateController extends BaseController {
     @ApiOperation("添加任务模板")
     public ReturnT<String> add(HttpServletRequest request, @RequestBody JobTemplate jobTemplate) {
         jobTemplate.setUserId(getCurrentUserId(request));
+        jobTemplate.setGlueType(GlueTypeEnum.GLUE_SHELL.name());
         if (JobAdminConfig.getAdminConfig().getFlinkxHome() != null && !JobAdminConfig.getAdminConfig().getFlinkxHome().isEmpty()) {
             jobTemplate.setGlueSource("python " + JobAdminConfig.getAdminConfig().getFlinkxHome() + " $1 $2");// 1: job json file path, 2: log name
         }
