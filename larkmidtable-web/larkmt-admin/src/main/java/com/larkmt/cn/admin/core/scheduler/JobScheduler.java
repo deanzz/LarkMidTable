@@ -7,6 +7,7 @@ import com.larkmt.cn.admin.core.thread.JobLogReportHelper;
 import com.larkmt.cn.admin.core.thread.JobRegistryMonitorHelper;
 import com.larkmt.cn.admin.core.thread.JobScheduleHelper;
 import com.larkmt.cn.admin.core.thread.JobTriggerPoolHelper;
+import com.larkmt.core.thread.TriggerCallbackThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,10 @@ public class JobScheduler {
 
         // start-schedule
         JobScheduleHelper.getInstance().start();
+    
+        // init TriggerCallbackThread
+        TriggerCallbackThread.getInstance().start();
+        logger.info("TriggerCallbackThread started");
 
         logger.info(">>>>>>>>> init LarkMidTable admin success.");
     }
