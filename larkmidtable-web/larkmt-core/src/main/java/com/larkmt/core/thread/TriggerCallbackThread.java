@@ -37,7 +37,7 @@ public class TriggerCallbackThread {
 
     public static void pushCallBack(HandleCallbackParam callback) {
         getInstance().callBackQueue.add(callback);
-        logger.debug(">>>>>>>>>>> web, push callback request, logId:{}", callback.getLogId());
+        logger.info(">>>>>>>>>>> web, push callback request, logId:{}", callback.getLogId());
     }
 
     /**
@@ -62,7 +62,7 @@ public class TriggerCallbackThread {
             while (!toStop) {
                 try {
                     HandleCallbackParam callback = getInstance().callBackQueue.take();
-
+                    logger.info("start callback " + callback );
                     // callback list param
                     List<HandleCallbackParam> callbackParamList = new ArrayList<HandleCallbackParam>();
                     int drainToNum = getInstance().callBackQueue.drainTo(callbackParamList);

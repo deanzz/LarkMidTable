@@ -44,7 +44,7 @@ public class AdminBizImpl implements AdminBiz {
     public ReturnT<String> callback(List<HandleCallbackParam> callbackParamList) {
         for (HandleCallbackParam handleCallbackParam : callbackParamList) {
             ReturnT<String> callbackResult = callback(handleCallbackParam);
-            logger.debug(">>>>>>>>> JobApiController.callback {}, handleCallbackParam={}, callbackResult={}",
+            logger.info(">>>>>>>>> JobApiController.callback {}, handleCallbackParam={}, callbackResult={}",
                     (callbackResult.getCode() == IJobHandler.SUCCESS.getCode() ? "success" : "fail"), handleCallbackParam, callbackResult);
         }
 
@@ -68,6 +68,8 @@ public class AdminBizImpl implements AdminBiz {
 
 
     private ReturnT<String> callback(HandleCallbackParam handleCallbackParam) {
+        
+        logger.info("start callback under AdminBizImpl with " + handleCallbackParam);
         // valid log item
         JobLog log = jobLogMapper.load(handleCallbackParam.getLogId());
         if (log == null) {
