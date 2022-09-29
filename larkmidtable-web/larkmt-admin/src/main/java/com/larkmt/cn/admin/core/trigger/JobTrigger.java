@@ -150,7 +150,14 @@ public class JobTrigger {
         // 2、init trigger-param
         triggerParam.setJobId(jobInfo.getId());
         triggerParam.setExecutorHandler(jobInfo.getExecutorHandler());
-        triggerParam.setExecutorParams(jsonFileName + " jobLog" + jobInfo.getId() + "_" + System.currentTimeMillis());
+        String jobLogName = JobAdminConfig.getAdminConfig().getFlinkxLogHome()
+                .concat(File.separator)
+                .concat(String.valueOf(jobInfo.getId()))
+                .concat("_")
+                .concat(String.valueOf(System.currentTimeMillis()))
+                .concat(".")
+                .concat("log");
+        triggerParam.setExecutorParams(jsonFileName + " " + jobLogName);
         triggerParam.setExecutorBlockStrategy(jobInfo.getExecutorBlockStrategy());
         triggerParam.setExecutorTimeout(jobInfo.getExecutorTimeout());
         triggerParam.setLogId(jobLog.getId());

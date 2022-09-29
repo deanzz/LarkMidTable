@@ -81,6 +81,9 @@ public class JobAdminConfig implements InitializingBean, DisposableBean {
     
     @Value("${larkmt.executor.flinkxjsonPath}")
     private String flinkxJsonPath;
+    
+    @Value("${larkmt.executor.flinkxlogHome}")
+    private String flinkxLogHome;
 
     // dao, service
 
@@ -171,5 +174,9 @@ public class JobAdminConfig implements InitializingBean, DisposableBean {
     
     public String getFlinkxHome() {
         return flinkxHome;
+    }
+    
+    public String getFlinkxLogHome() {
+        return flinkxLogHome;
     }
 }
