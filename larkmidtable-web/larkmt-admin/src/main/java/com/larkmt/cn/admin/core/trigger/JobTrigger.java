@@ -139,7 +139,7 @@ public class JobTrigger {
                 .concat(File.separator)
                 .concat(String.valueOf(jobInfo.getId()))
                 .concat("_")
-                .concat(String.valueOf(jobInfo.getGlueUpdatetime()))
+                .concat(String.valueOf(jobInfo.getGlueUpdatetime().getTime()))
                 .concat(".")
                 .concat("json");
         File scriptFile = new File(jsonFileName);
