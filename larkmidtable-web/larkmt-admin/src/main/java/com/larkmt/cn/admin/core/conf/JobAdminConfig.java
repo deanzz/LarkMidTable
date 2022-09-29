@@ -75,6 +75,12 @@ public class JobAdminConfig implements InitializingBean, DisposableBean {
 
     @Value("${datasource.aes.key}")
     private String dataSourceAESKey;
+    
+    @Value("${larkmt.executor.flinkxHome}")
+    private String flinkxHome;
+    
+    @Value("${larkmt.executor.flinkxjsonPath}")
+    private String flinkxJsonPath;
 
     // dao, service
 
@@ -157,5 +163,13 @@ public class JobAdminConfig implements InitializingBean, DisposableBean {
 
     public void setDataSourceAESKey(String dataSourceAESKey) {
         this.dataSourceAESKey = dataSourceAESKey;
+    }
+    
+    public String getFlinkxJsonPath() {
+        return flinkxJsonPath;
+    }
+    
+    public String getFlinkxHome() {
+        return flinkxHome;
     }
 }

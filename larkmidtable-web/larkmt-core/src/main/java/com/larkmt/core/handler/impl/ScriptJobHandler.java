@@ -78,11 +78,12 @@ public class ScriptJobHandler extends IJobHandler {
         String logFileName = JobFileAppender.contextHolder.get();
 
         // script params：0=param、1=分片序号、2=分片总数
-        ShardingUtil.ShardingVO shardingVO = ShardingUtil.getShardingVo();
+        /* ShardingUtil.ShardingVO shardingVO = ShardingUtil.getShardingVo();
         String[] scriptParams = new String[3];
         scriptParams[0] = tgParam.getExecutorParams();
         scriptParams[1] = String.valueOf(shardingVO.getIndex());
-        scriptParams[2] = String.valueOf(shardingVO.getTotal());
+        scriptParams[2] = String.valueOf(shardingVO.getTotal());*/
+        String[] scriptParams = tgParam.getExecutorParams().split(" ");
 
         // invoke
         JobLogger.log("----------- script file:"+ scriptFileName +" -----------");

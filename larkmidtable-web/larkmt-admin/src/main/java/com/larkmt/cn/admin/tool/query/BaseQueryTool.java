@@ -348,7 +348,12 @@ public abstract class BaseQueryTool implements QueryToolInterface {
             int columnCount = metaData.getColumnCount();
             for (int i = 1; i <= columnCount; i++) {
                 String columnName = metaData.getColumnName(i);
-                if (JdbcConstants.HIVE.equals(datasource)) {
+                if (columnName.contains(Constants.SPLIT_POINT)) {
+                    res.add(i - 1 + Constants.SPLIT_SCOLON + columnName.substring(columnName.indexOf(Constants.SPLIT_POINT) + 1) + Constants.SPLIT_SCOLON + metaData.getColumnTypeName(i));
+                } else {
+                    res.add(i - 1 + Constants.SPLIT_SCOLON + columnName + Constants.SPLIT_SCOLON + metaData.getColumnTypeName(i));
+                }
+                /*if (JdbcConstants.HIVE.equals(datasource)) {
                     if (columnName.contains(Constants.SPLIT_POINT)) {
                         res.add(i - 1 + Constants.SPLIT_SCOLON + columnName.substring(columnName.indexOf(Constants.SPLIT_POINT) + 1) + Constants.SPLIT_SCOLON + metaData.getColumnTypeName(i));
                     } else {
@@ -356,7 +361,7 @@ public abstract class BaseQueryTool implements QueryToolInterface {
                     }
                 } else {
                     res.add(columnName);
-                }
+                }*/
 
             }
         } catch (SQLException e) {

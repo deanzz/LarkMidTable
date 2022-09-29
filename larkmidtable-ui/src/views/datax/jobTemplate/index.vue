@@ -299,7 +299,7 @@
                     userId: 0,
                     jobConfigId: '',
                     executorHandler: 'executorJobHandler',
-                    glueType: 'BEAN',
+                    glueType: 'GLUE_SHELL',
                     executorParam: '',
                     jvmParam: '',
                     projectId: '',
@@ -331,7 +331,7 @@
                     // { value: 'SHARDING_BROADCAST', label: '分片广播' }
                 ],
                 glueTypes: [
-                    { value: 'BEAN', label: 'FlinkX任务' }
+                    { value: 'GLUE_SHELL', label: 'FlinkX任务' }
                 ],
                 triggerNextTimes: '',
                 registerNode: []

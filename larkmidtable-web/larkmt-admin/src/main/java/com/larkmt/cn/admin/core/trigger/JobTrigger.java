@@ -18,11 +18,15 @@ import com.larkmt.core.biz.model.TriggerParam;
 import com.larkmt.core.enums.ExecutorBlockStrategyEnum;
 import com.larkmt.core.enums.IncrementTypeEnum;
 import com.larkmt.core.glue.GlueTypeEnum;
+import com.larkmt.core.log.JobFileAppender;
+import com.larkmt.core.util.ScriptUtil;
 import io.netty.util.internal.ThrowableUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -44,7 +48,7 @@ public class JobTrigger {
      * @param executorParam         null: use job param
      *                              not null: cover job param
      */
-    public static void trigger(int jobId, TriggerTypeEnum triggerType, int failRetryCount, String executorShardingParam, String executorParam) {
+    public static void trigger(int jobId, TriggerTypeEnum triggerType, int failRetryCount, String executorShardingParam, String executorParam) throws IOException {
         JobInfo jobInfo = JobAdminConfig.getAdminConfig().getJobInfoMapper().loadById(jobId);
         if (jobInfo == null) {
             logger.warn(">>>>>>>>>>>> trigger fail, jobId invalid，jobId={}", jobId);
@@ -106,7 +110,7 @@ public class JobTrigger {
      * @param index               sharding index
      * @param total               sharding index
      */
-    private static void processTrigger(JobGroup group, JobInfo jobInfo, int finalFailRetryCount, TriggerTypeEnum triggerType, int index, int total) {
+    private static void processTrigger(JobGroup group, JobInfo jobInfo, int finalFailRetryCount, TriggerTypeEnum triggerType, int index, int total) throws IOException {
 
         TriggerParam triggerParam = new TriggerParam();
 
@@ -130,10 +134,23 @@ public class JobTrigger {
         JobAdminConfig.getAdminConfig().getJobLogMapper().save(jobLog);
         logger.info(">>>>>>>>>>> LarkMidTable trigger start, jobId:{}", jobLog.getId());
 
+        // prepare job json file
+        String jsonFileName = JobAdminConfig.getAdminConfig().getFlinkxJsonPath()
+                .concat(File.separator)
+                .concat(String.valueOf(jobInfo.getId()))
+                .concat("_")
+                .concat(String.valueOf(jobInfo.getGlueUpdatetime()))
+                .concat(".")
+                .concat("json");
+        File scriptFile = new File(jsonFileName);
+        if (!scriptFile.exists()) {
+            scriptFile.createNewFile();
+            ScriptUtil.markScriptFile(scriptFile, jobInfo.getJobJson());
+        }
         // 2、init trigger-param
         triggerParam.setJobId(jobInfo.getId());
         triggerParam.setExecutorHandler(jobInfo.getExecutorHandler());
-        triggerParam.setExecutorParams(jobInfo.getExecutorParam());
+        triggerParam.setExecutorParams(jsonFileName + " jobLog" + jobInfo.getId() + "_" + System.currentTimeMillis());
         triggerParam.setExecutorBlockStrategy(jobInfo.getExecutorBlockStrategy());
         triggerParam.setExecutorTimeout(jobInfo.getExecutorTimeout());
         triggerParam.setLogId(jobLog.getId());

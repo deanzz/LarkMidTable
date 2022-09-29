@@ -2,6 +2,7 @@ package com.larkmt.cn.admin.controller;
 
 
 import com.larkmt.cn.admin.base.BaseController;
+import com.larkmt.cn.admin.core.conf.JobAdminConfig;
 import com.larkmt.cn.admin.entity.JobTemplate;
 import com.larkmt.cn.admin.service.JobTemplateService;
 import com.larkmt.core.biz.model.ReturnT;
@@ -50,6 +51,9 @@ public class JobTemplateController extends BaseController {
     @ApiOperation("添加任务模板")
     public ReturnT<String> add(HttpServletRequest request, @RequestBody JobTemplate jobTemplate) {
         jobTemplate.setUserId(getCurrentUserId(request));
+        if (JobAdminConfig.getAdminConfig().getFlinkxHome() != null && !JobAdminConfig.getAdminConfig().getFlinkxHome().isEmpty()) {
+            jobTemplate.setGlueSource("python " + JobAdminConfig.getAdminConfig().getFlinkxHome() + " $1 $2");// 1: job json file path, 2: log name
+        }
         return jobTemplateService.add(jobTemplate);
     }
 
